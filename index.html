@@ -1,0 +1,336 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onirik | Designing the Unconscious</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-black: #000000;
+            --bg-dark: #050507;
+            --text-white: #ffffff;
+            --text-gray: #a1a1aa;
+            --accent-gray: #27272a;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Inter', sans-serif;
+            --transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-black);
+            color: var(--text-white);
+            font-family: var(--font-sans);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* --- FONDO ATMOSFÉRICO --- */
+        .ambient-light {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 50% 50%, #111118 0%, #000000 100%);
+        }
+
+        .glow-circle {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60vw; height: 60vw;
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+            z-index: -1;
+            animation: breathe 10s infinite alternate;
+        }
+
+        @keyframes breathe {
+            from { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+            to { opacity: 0.7; transform: translate(-50%, -50%) scale(1.2); }
+        }
+
+        /* --- NAVEGACIÓN --- */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 2rem 0;
+            z-index: 1000;
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo-img {
+            height: 35px; /* Ajustado al logo enviado */
+            display: block;
+        }
+
+        .nav-cta {
+            color: var(--text-white);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 1px solid var(--text-white);
+            padding: 0.5rem 1.5rem;
+            border-radius: 100px;
+            transition: var(--transition);
+        }
+
+        .nav-cta:hover {
+            background: var(--text-white);
+            color: var(--bg-black);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-family: var(--font-serif);
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 400;
+            line-height: 1.2;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hero-content .italic-gray {
+            display: block;
+            font-style: italic;
+            color: var(--text-gray);
+            font-weight: 300;
+            margin-top: 1rem;
+        }
+
+        /* --- REVEAL ANIMATION --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: var(--transition);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- SECTION STYLE --- */
+        .section {
+            padding: 8rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: var(--font-serif);
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        /* --- PRODUCT GRID --- */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+        }
+
+        .product-card {
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 32px;
+            padding: 3rem;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card:hover {
+            border-color: rgba(255,255,255,0.3);
+            transform: translateY(-10px);
+        }
+
+        .image-box {
+            width: 100%;
+            height: 350px;
+            background: #000;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .product-card h3 {
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-card p {
+            color: var(--text-gray);
+            font-weight: 300;
+        }
+
+        /* --- ZERO UI STRIP --- */
+        .zero-ui {
+            text-align: center;
+            background: var(--bg-dark);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .ui-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .ui-item {
+            padding: 2rem;
+        }
+
+        .ui-item strong {
+            display: block;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .ui-item p {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 10rem 2rem 5rem 2rem;
+            text-align: center;
+        }
+
+        .final-quote {
+            font-family: var(--font-serif);
+            font-size: 2.2rem;
+            max-width: 800px;
+            margin: 0 auto 4rem auto;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .product-grid, .ui-grid { grid-template-columns: 1fr; }
+            .hero-content h1 { font-size: 2.2rem; }
+            .section-title { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-light"></div>
+    <div class="glow-circle"></div>
+
+    <nav>
+        <div class="nav-container">
+            <div class="logo-container">
+                <!-- AQUÍ INSERTAS TU LOGO -->
+                <img src="tu-logo-onirik.png" alt="Onirik Logo" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <div style="display:none; font-family: var(--font-serif); letter-spacing: 4px; font-size: 1.2rem;">ONIRIK</div>
+            </div>
+            <a href="#reserve" class="nav-cta">Reserve Now</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="reveal">
+                ¿Y si el problema no es que olvidemos nuestros sueños...
+                <span class="italic-gray">Sino que nunca diseñamos una forma de recordarlos?</span>
+            </h1>
+        </div>
+    </header>
+
+    <section class="section zero-ui">
+        <h2 class="section-title reveal">La Presencia <span style="color: var(--text-gray);">Invisible</span></h2>
+        <div class="ui-grid">
+            <div class="ui-item reveal">
+                <strong>ZERO UI</strong>
+                <p>Eliminamos pantallas. El diseño desaparece para que la experiencia emerja.</p>
+            </div>
+            <div class="ui-item reveal" style="transition-delay: 0.2s;">
+                <strong>NEURAL SYNC</strong>
+                <p>Interacción orgánica mediante sensores neuronales y voz.</p>
+            </div>
+            <div class="ui-item reveal" style="transition-delay: 0.4s;">
+                <strong>SENSORIAL</strong>
+                <p>Diseñado para convivir con el ciclo biológico sin interrumpir el descanso.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="product-grid">
+            <div class="product-card reveal">
+                <div class="image-box">
+                    <!-- SUSTITUIR POR IMAGEN DE LA BANDA DEL PDF -->
+                    <span style="color: var(--text-gray); font-size: 0.8rem; letter-spacing: 2px;">WEARABLE BAND</span>
+                </div>
+                <h3>Hardware Neural</h3>
+                <p>Una banda de ingeniería textil que registra actividad cerebral en tiempo real, induciendo estados de relajación profunda.</p>
+            </div>
+            <div class="product-card reveal" style="transition-delay: 0.3s;">
+                <div class="image-box">
+                    <!-- SUSTITUIR POR IMAGEN DE MEMENTO AI DEL PDF -->
+                    <span style="color: var(--text-gray); font-size: 0.8rem; letter-spacing: 2px;">MEMENTO AI</span>
+                </div>
+                <h3>Memento IA</h3>
+                <p>El puente cognitivo que traduce patrones neuronales en significados, convirtiendo el sueño en información accionable.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer id="reserve">
+        <p class="final-quote reveal">
+            "Si mañana pudieras recordar cada detalle de lo que soñaste... <br>
+            ¿lo verías como una curiosidad, o como una herramienta para entenderte mejor?"
+        </p>
+        <a href="#" class="nav-cta reveal" style="padding: 1rem 3rem; font-size: 1rem;">Join the Waitlist</a>
+        <div style="margin-top: 8rem; color: var(--text-gray); font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;">
+            Onirik Project &copy; 2024 | Designing the Unconscious
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
